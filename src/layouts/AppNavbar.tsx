@@ -24,7 +24,7 @@ export const AppNavbar = () => {
   ];
 
   return (
-    <Navbar width={{ base: 250 }}>
+    <Navbar width={{ base: 50 }}>
       <Navbar.Section>
         <Stack className="my-5" spacing={5}>
           {links.map((link, index) => {
