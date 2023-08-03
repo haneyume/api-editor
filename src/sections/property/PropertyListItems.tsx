@@ -16,8 +16,15 @@ import { IconGripVertical, IconX } from '@tabler/icons-react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { AppContext } from '../../contexts';
+import type { ApiItem } from '../../types';
 
-export const PropertyListItems = ({ label }: { label: string }) => {
+export const PropertyListItems = ({
+  label,
+  field,
+}: {
+  label: string;
+  field: keyof ApiItem;
+}) => {
   const projectCtx = useContext(AppContext);
 
   const current = projectCtx.currentApiItem;
@@ -27,25 +34,21 @@ export const PropertyListItems = ({ label }: { label: string }) => {
 
   const form = useForm({
     initialValues: {
-      items: [
-        { label: 'Red', value: 'red' },
-        { label: 'Green', value: 'green' },
-        { label: 'Blue', value: 'blue' },
-      ],
+      items: [{ key: '', value: '' }],
     },
   });
 
-  // useEffect(() => {
-  //   if (current.data?.data) {
-  //     form.setValues({ items: current.data.data });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (current.data?.[field]) {
+      form.setValues({ items: current.data[field] as any });
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   projectCtx.setSingleItem(current.id, {
-  //     data: form.values.items,
-  //   });
-  // }, [form.values]);
+  useEffect(() => {
+    projectCtx.setSingleApiItem({
+      [field]: form.values.items,
+    });
+  }, [form.values]);
 
   const fields = form.values.items.map((_, index) => (
     <Draggable key={index} index={index} draggableId={index.toString()}>
@@ -62,8 +65,8 @@ export const PropertyListItems = ({ label }: { label: string }) => {
           <TextInput
             className="flex-1"
             variant="filled"
-            placeholder="label"
-            {...form.getInputProps(`items.${index}.label`)}
+            placeholder="key"
+            {...form.getInputProps(`items.${index}.key`)}
           />
           <TextInput
             className="flex-1"
@@ -105,9 +108,8 @@ export const PropertyListItems = ({ label }: { label: string }) => {
         <Group mt="md">
           <Button
             fullWidth
-            onClick={() =>
-              form.insertListItem('items', { label: '', value: '' })
-            }
+            variant="light"
+            onClick={() => form.insertListItem('items', { key: '', value: '' })}
           >
             Add
           </Button>

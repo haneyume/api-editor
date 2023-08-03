@@ -23,8 +23,8 @@ export const NewItemButton = () => {
               droppable: false,
               data: {
                 method: 'GET',
-                path: '/api/v1/users',
-                description: 'Get users',
+                path: 'https://example.com/api/v1/new-api',
+                description: 'New Api',
                 headers: [],
                 queryParams: [],
                 pathVariables: [],

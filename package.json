@@ -26,6 +26,7 @@
     "dayjs": "^1.11.9",
     "file-saver": "^2.0.5",
     "i18next": "^23.2.8",
+    "jsonpath": "^1.1.1",
     "jszip": "^3.10.1",
     "numbro": "^2.3.6",
     "react": "^18.2.0",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
+    "@types/jsonpath": "^0.2.0",
     "@types/react": "^18.2.14",
     "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-dom": "^18.2.6",
