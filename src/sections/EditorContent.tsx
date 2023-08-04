@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 
 import {
   ScrollArea,
@@ -14,7 +14,6 @@ import {
 } from '@mantine/core';
 
 import axios from 'axios';
-import jsonpath from 'jsonpath';
 
 import ReactJson from 'react-json-view';
 
