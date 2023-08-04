@@ -20,10 +20,50 @@ interface ApiItem {
   pathVariables: Array<{ key: string; value: string }>;
   body: string;
 
-  response: string;
+  response: any;
+  jsonPathList: Array<{
+    name: string;
+    value: string;
+    example: any;
+  }>;
 }
 
 type DNDTreeApiItem = DNDTreeItem<ApiItem>;
+
+// ----------------------------------------------
+
+export type { DNDTreeApiItem, ApiItem };
+
+// ----------------------------------------------
+
+export const createNewApiItemFolder: () => DNDTreeApiItem = () => {
+  return {
+    id: uuidv4(),
+    parent: 'root',
+    text: 'New Folder',
+    droppable: true,
+  };
+};
+
+export const createNewApiItem: () => DNDTreeApiItem = () => {
+  return {
+    id: uuidv4(),
+    parent: 'root',
+    text: 'New Api',
+    droppable: false,
+    data: {
+      method: 'GET',
+      path: 'https://example.com/api/v1/new-api',
+      description: 'New Api',
+      headers: [],
+      queryParams: [],
+      pathVariables: [],
+      body: '',
+      response: {},
+      jsonPathList: [],
+    },
+  };
+};
 
 // ----------------------------------------------
 
@@ -50,7 +90,8 @@ export const defaultApiItems: () => DNDTreeApiItem[] = () => {
         queryParams: [],
         pathVariables: [],
         body: '',
-        response: '',
+        response: {},
+        jsonPathList: [],
       },
     },
     {
@@ -66,7 +107,8 @@ export const defaultApiItems: () => DNDTreeApiItem[] = () => {
         queryParams: [],
         pathVariables: [],
         body: '',
-        response: '',
+        response: {},
+        jsonPathList: [],
       },
     },
     {
@@ -82,12 +124,9 @@ export const defaultApiItems: () => DNDTreeApiItem[] = () => {
         queryParams: [],
         pathVariables: [],
         body: '',
-        response: '',
+        response: {},
+        jsonPathList: [],
       },
     },
   ];
 };
-
-// ----------------------------------------------
-
-export type { DNDTreeApiItem, ApiItem };

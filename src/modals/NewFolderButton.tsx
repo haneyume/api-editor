@@ -3,9 +3,8 @@ import { useContext } from 'react';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconFolderPlus } from '@tabler/icons-react';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import { AppContext } from '../contexts';
+import { createNewApiItemFolder } from '../types';
 
 export const NewFolderButton = () => {
   const projectCtx = useContext(AppContext);
@@ -16,12 +15,7 @@ export const NewFolderButton = () => {
         onClick={() => {
           projectCtx.setApiItems([
             ...projectCtx.apiItems,
-            {
-              id: uuidv4(),
-              parent: 'root',
-              text: 'Folder',
-              droppable: true,
-            },
+            createNewApiItemFolder(),
           ]);
         }}
       >

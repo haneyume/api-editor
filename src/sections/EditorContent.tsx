@@ -21,6 +21,7 @@ import ReactJson from 'react-json-view';
 import { AppContext } from '../contexts';
 
 import { PropertyListItems } from './property/PropertyListItems';
+import { PropertyJsonPath } from './property/PropertyJsonPath';
 
 export const EditorContent = () => {
   const projectCtx = useContext(AppContext);
@@ -38,8 +39,9 @@ export const EditorContent = () => {
 
           <Tabs defaultValue="0">
             <Tabs.List>
-              <Tabs.Tab value="0">Basic</Tabs.Tab>
+              <Tabs.Tab value="0">Api Settings</Tabs.Tab>
               <Tabs.Tab value="1">Request</Tabs.Tab>
+              <Tabs.Tab value="2">JSON Path</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="0" pt="xs">
@@ -47,7 +49,11 @@ export const EditorContent = () => {
             </Tabs.Panel>
 
             <Tabs.Panel value="1" pt="xs">
-              <RequestTab />
+              <RequestTab key={current.id} />
+            </Tabs.Panel>
+
+            <Tabs.Panel value="2" pt="xs">
+              <PropertyJsonPath key={current.id} />
             </Tabs.Panel>
           </Tabs>
         </Stack>
@@ -133,22 +139,6 @@ const RequestTab = () => {
   const projectCtx = useContext(AppContext);
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [jsonP, setJsonP] = useState<string>('$');
-  const [jsonPResult, setJsonPResult] = useState<string>('');
-
-  useEffect(() => {
-    const current = projectCtx.currentApiItem;
-    if (!current) {
-      return;
-    }
-
-    try {
-      const r = jsonpath.query(current.data?.response as any, jsonP);
-      setJsonPResult(JSON.stringify(r, null, 2));
-    } catch (error: any) {
-      setJsonPResult(error.message);
-    }
-  }, [jsonP, projectCtx.currentApiItem]);
 
   const current = projectCtx.currentApiItem;
   if (!current) {
@@ -189,22 +179,6 @@ const RequestTab = () => {
           enableClipboard={false}
         />
       </Card>
-
-      <Group>
-        <TextInput
-          className="flex-1"
-          placeholder="JSON Path"
-          value={jsonP}
-          onChange={(e) => setJsonP(e.currentTarget.value)}
-        />
-
-        <TextInput
-          className="flex-1"
-          placeholder="JSON Path"
-          value={jsonPResult}
-          disabled
-        />
-      </Group>
     </Stack>
   );
 };
