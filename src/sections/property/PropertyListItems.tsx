@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 
 import {
   Group,
@@ -15,8 +15,10 @@ import { IconGripVertical, IconX } from '@tabler/icons-react';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { AppContext } from '../../contexts';
 import type { ApiItem } from '../../types';
+
+import { useAppSelector, useAppDispatch } from '../../redux';
+import { updateCurrentItem2 } from '../../redux/apiItemSlice';
 
 export const PropertyListItems = ({
   label,
@@ -25,10 +27,10 @@ export const PropertyListItems = ({
   label: string;
   field: keyof ApiItem;
 }) => {
-  const projectCtx = useContext(AppContext);
+  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const dispatch = useAppDispatch();
 
-  const current = projectCtx.currentApiItem;
-  if (!current) {
+  if (!currentItem) {
     return null;
   }
 
@@ -39,15 +41,22 @@ export const PropertyListItems = ({
   });
 
   useEffect(() => {
-    if (current.data?.[field]) {
-      form.setValues({ items: current.data[field] as any });
+    if (currentItem.data?.[field]) {
+      const defaultValue = currentItem.data[field];
+      form.setValues({ items: defaultValue });
     }
   }, []);
 
   useEffect(() => {
-    projectCtx.setSingleApiItem({
-      [field]: form.values.items,
-    });
+    // Deep copy the array of objects
+    const value = JSON.parse(JSON.stringify(form.values.items));
+
+    dispatch(
+      updateCurrentItem2({
+        key: field,
+        value: value,
+      }),
+    );
   }, [form.values]);
 
   const fields = form.values.items.map((_, index) => (

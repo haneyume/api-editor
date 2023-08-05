@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import {
   ScrollArea,
@@ -14,19 +14,19 @@ import {
 } from '@mantine/core';
 
 import axios from 'axios';
-
 import ReactJson from 'react-json-view';
 
-import { AppContext } from '../contexts';
+import { useAppSelector, useAppDispatch } from '../redux';
+import { updateCurrentItem } from '../redux/apiItemSlice';
 
+// import { Test } from './property/PropertyUIs';
 import { PropertyListItems } from './property/PropertyListItems';
 import { PropertyJsonPath } from './property/PropertyJsonPath';
 
 export const EditorContent = () => {
-  const projectCtx = useContext(AppContext);
+  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
 
-  const current = projectCtx.currentApiItem;
-  if (!current) {
+  if (!currentItem) {
     return null;
   }
 
@@ -34,7 +34,9 @@ export const EditorContent = () => {
     <ScrollArea className="h-full">
       <Card withBorder>
         <Stack>
-          <Title order={3}>{current.text}</Title>
+          <Title order={3}>{currentItem.text}</Title>
+
+          {/* <Test /> */}
 
           <Tabs defaultValue="0">
             <Tabs.List>
@@ -44,15 +46,15 @@ export const EditorContent = () => {
             </Tabs.List>
 
             <Tabs.Panel value="0" pt="xs">
-              <BasicTab key={current.id} />
+              <BasicTab key={currentItem.id} />
             </Tabs.Panel>
 
             <Tabs.Panel value="1" pt="xs">
-              <RequestTab key={current.id} />
+              <RequestTab key={currentItem.id} />
             </Tabs.Panel>
 
             <Tabs.Panel value="2" pt="xs">
-              <PropertyJsonPath key={current.id} />
+              <PropertyJsonPath key={currentItem.id} />
             </Tabs.Panel>
           </Tabs>
         </Stack>
@@ -62,10 +64,10 @@ export const EditorContent = () => {
 };
 
 const BasicTab = () => {
-  const projectCtx = useContext(AppContext);
+  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const dispatch = useAppDispatch();
 
-  const current = projectCtx.currentApiItem;
-  if (!current) {
+  if (!currentItem) {
     return null;
   }
 
@@ -76,24 +78,20 @@ const BasicTab = () => {
           label="Method"
           variant="filled"
           data={['GET', 'POST', 'PUT', 'DELETE']}
-          value={current.data?.method}
-          onChange={(value) =>
-            projectCtx.setSingleApiItem({
-              method: value!,
-            })
-          }
+          value={currentItem.data?.method}
+          onChange={(value) => {
+            dispatch(updateCurrentItem({ method: value! }));
+          }}
         />
 
         <TextInput
           className="flex-1"
           variant="filled"
           label="Path"
-          value={current.data?.path}
-          onChange={(e) =>
-            projectCtx.setSingleApiItem({
-              path: e.currentTarget.value,
-            })
-          }
+          value={currentItem.data?.path}
+          onChange={(e) => {
+            dispatch(updateCurrentItem({ path: e.target.value }));
+          }}
         />
       </Group>
 
@@ -101,15 +99,10 @@ const BasicTab = () => {
         className="flex-1"
         variant="filled"
         label="Description"
-        value={current.data?.description}
-        onChange={(e) =>
-          projectCtx.setSingleApiItem(
-            {
-              description: e.currentTarget.value,
-            },
-            e.currentTarget.value,
-          )
-        }
+        value={currentItem.data?.description}
+        onChange={(e) => {
+          dispatch(updateCurrentItem({ description: e.target.value }));
+        }}
       />
 
       <PropertyListItems label="Headers" field="headers" />
@@ -123,24 +116,22 @@ const BasicTab = () => {
         label="Body"
         minRows={5}
         autosize
-        value={current.data?.body}
-        onChange={(e) =>
-          projectCtx.setSingleApiItem({
-            body: e.currentTarget.value,
-          })
-        }
+        value={currentItem.data?.body}
+        onChange={(e) => {
+          dispatch(updateCurrentItem({ body: e.target.value }));
+        }}
       />
     </Stack>
   );
 };
 
 const RequestTab = () => {
-  const projectCtx = useContext(AppContext);
-
   const [loading, setLoading] = useState<boolean>(false);
 
-  const current = projectCtx.currentApiItem;
-  if (!current) {
+  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const dispatch = useAppDispatch();
+
+  if (!currentItem) {
     return null;
   }
 
@@ -148,10 +139,10 @@ const RequestTab = () => {
     setLoading(true);
 
     const response = await axios({
-      method: current.data?.method,
-      url: current.data?.path,
-      data: current.data?.body,
-      headers: current.data?.headers?.reduce(
+      method: currentItem.data?.method,
+      url: currentItem.data?.path,
+      data: currentItem.data?.body,
+      headers: currentItem.data?.headers?.reduce(
         (acc, item) => ({ ...acc, [item.key]: item.value }),
         {},
       ),
@@ -159,9 +150,7 @@ const RequestTab = () => {
 
     setLoading(false);
 
-    projectCtx.setSingleApiItem({
-      response: response.data,
-    });
+    dispatch(updateCurrentItem({ response: response.data }));
   };
 
   return (
@@ -172,7 +161,7 @@ const RequestTab = () => {
 
       <Card withBorder>
         <ReactJson
-          src={(current.data?.response as any) || {}}
+          src={(currentItem.data?.response as any) || {}}
           theme={'monokai'}
           name={null}
           enableClipboard={false}

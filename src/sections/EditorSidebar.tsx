@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 import { Group, Stack, Text } from '@mantine/core';
 import {
@@ -16,11 +16,16 @@ import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 
 import clsx from 'clsx';
 
-import { AppContext } from '../contexts';
+import { useAppSelector, useAppDispatch } from '../redux';
+import { select, updateAllItems } from '../redux/apiItemSlice';
+
 import { NewFolderButton, NewItemButton } from '../modals';
 
 export const EditorSidebar = () => {
-  const projectCtx = useContext(AppContext);
+  const items = useAppSelector((state) => state.apiItem.items);
+  const selectedId = useAppSelector((state) => state.apiItem.selectedId);
+  // const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const dispatch = useAppDispatch();
 
   const treeRef = useRef<TreeMethods>(null);
 
@@ -29,7 +34,7 @@ export const EditorSidebar = () => {
   }, [treeRef]);
 
   const handleDrop = (newTreeData: any) => {
-    projectCtx.setApiItems(newTreeData);
+    dispatch(updateAllItems(newTreeData));
   };
 
   const renderIcon = (method: string) => {
@@ -54,7 +59,7 @@ export const EditorSidebar = () => {
       <DndProvider backend={HTML5Backend}>
         <Tree
           ref={treeRef}
-          tree={projectCtx.apiItems}
+          tree={items}
           rootId={'root'}
           onDrop={handleDrop}
           sort={false}
@@ -74,7 +79,7 @@ export const EditorSidebar = () => {
             <div
               className={clsx(
                 'flex items-center space-x-2 cursor-pointer hover:bg-gray-800',
-                projectCtx.selectedApiId === node.id && 'bg-gray-700',
+                selectedId === node.id && 'bg-gray-700',
               )}
               style={{ paddingLeft: 10 + depth * 20 }}
               onClick={() => {
@@ -83,7 +88,7 @@ export const EditorSidebar = () => {
                 }
 
                 if (!node.droppable) {
-                  projectCtx.setSelectedApiId(node.id as string);
+                  dispatch(select(node.id as string));
                 }
               }}
             >

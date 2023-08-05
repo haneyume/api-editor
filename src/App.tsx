@@ -9,6 +9,7 @@ import {
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
+import { ReduxProvider, store } from './redux';
 import { AppRoutes } from './AppRoutes';
 
 export const App = () => {
@@ -19,23 +20,25 @@ export const App = () => {
   };
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        theme={{ colorScheme }}
-        withGlobalStyles
-        withNormalizeCSS
+    <ReduxProvider store={store}>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
       >
-        <ModalsProvider>
-          <Notifications position="top-right" />
+        <MantineProvider
+          theme={{ colorScheme }}
+          withGlobalStyles
+          withNormalizeCSS
+        >
+          <ModalsProvider>
+            <Notifications position="top-right" />
 
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </ModalsProvider>
-      </MantineProvider>
-    </ColorSchemeProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </ModalsProvider>
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </ReduxProvider>
   );
 };

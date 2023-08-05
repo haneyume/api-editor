@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 
 import {
   Group,
@@ -17,17 +17,17 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import jsonpath from 'jsonpath';
 
-import { AppContext } from '../../contexts';
-// import type { ApiItem } from '../../types';
+import { useAppSelector, useAppDispatch } from '../../redux';
+import { updateCurrentItem2 } from '../../redux/apiItemSlice';
 
 export const PropertyJsonPath = () => {
   const field = 'jsonPathList';
   const label = 'JSON Path';
 
-  const projectCtx = useContext(AppContext);
+  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const dispatch = useAppDispatch();
 
-  const current = projectCtx.currentApiItem;
-  if (!current) {
+  if (!currentItem) {
     return null;
   }
 
@@ -38,15 +38,22 @@ export const PropertyJsonPath = () => {
   });
 
   useEffect(() => {
-    if (current.data?.[field]) {
-      form.setValues({ items: current.data[field] as any });
+    if (currentItem.data?.[field]) {
+      const defaultValue = currentItem.data[field];
+      form.setValues({ items: defaultValue });
     }
   }, []);
 
   useEffect(() => {
-    projectCtx.setSingleApiItem({
-      [field]: form.values.items,
-    });
+    // Deep copy the array of objects
+    const value = JSON.parse(JSON.stringify(form.values.items));
+
+    dispatch(
+      updateCurrentItem2({
+        key: field,
+        value: value,
+      }),
+    );
   }, [form.values]);
 
   const jsonpathQuery = (data: any, jsonPath: string) => {
@@ -87,7 +94,7 @@ export const PropertyJsonPath = () => {
             variant="filled"
             placeholder="preview"
             value={jsonpathQuery(
-              current.data?.response,
+              currentItem.data?.response,
               form.values.items[index].value,
             )}
           />
