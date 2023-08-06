@@ -32,7 +32,7 @@ type DNDTreeApiItem = DNDTreeItem<ApiItem>;
 
 // ----------------------------------------------
 
-export type { DNDTreeApiItem, ApiItem };
+export type { DNDTreeItem, DNDTreeApiItem, ApiItem };
 
 // ----------------------------------------------
 

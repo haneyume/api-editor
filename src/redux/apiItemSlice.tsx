@@ -53,24 +53,6 @@ export const apiItemSlice = createSlice({
 
       state.currentItem = state.items[index];
     },
-    updateCurrentItem2: (
-      state,
-      action: PayloadAction<{ key: keyof ApiItem; value: any }>,
-    ) => {
-      const { items, selectedId } = state;
-      const { key, value } = action.payload;
-
-      const index = items.findIndex((item) => item.id === selectedId);
-      if (index === -1) {
-        return;
-      }
-
-      if (state.items[index].data) {
-        state.items[index].data![key] = value;
-      }
-
-      state.currentItem = state.items[index];
-    },
     select: (state, action: PayloadAction<string>) => {
       const id = action.payload;
 
@@ -84,10 +66,5 @@ export const apiItemSlice = createSlice({
 });
 
 export default apiItemSlice.reducer;
-export const {
-  newItem,
-  updateCurrentItem,
-  updateCurrentItem2,
-  select,
-  updateAllItems,
-} = apiItemSlice.actions;
+export const { newItem, updateCurrentItem, select, updateAllItems } =
+  apiItemSlice.actions;

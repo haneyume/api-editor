@@ -20,8 +20,8 @@ import { useAppSelector, useAppDispatch } from '../redux';
 import { updateCurrentItem } from '../redux/apiItemSlice';
 
 // import { Test } from './property/PropertyUIs';
-import { PropertyListItems } from './property/PropertyListItems';
-import { PropertyJsonPath } from './property/PropertyJsonPath';
+import { PropertyListItems } from '../property-uis/PropertyListItems';
+import { PropertyJsonPath } from '../property-uis/PropertyJsonPath';
 
 export const EditorContent = () => {
   const currentItem = useAppSelector((state) => state.apiItem.currentItem);

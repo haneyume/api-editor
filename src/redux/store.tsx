@@ -4,9 +4,14 @@ import undoable from 'redux-undo';
 import counterReducer from './counterSlice';
 import apiItemReducer from './apiItemSlice';
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     counter: undoable(counterReducer),
     apiItem: apiItemReducer,
   },
 });
+
+// store.dispatch({
+//   type: 'apiItem/newItem',
+//   payload: { name: '', type: 'item' },
+// });
