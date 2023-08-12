@@ -1,8 +1,7 @@
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconFilePlus } from '@tabler/icons-react';
 
-import { useAppDispatch } from '../redux';
-import { newItem } from '../redux/features/apiItems/apiItemsSlice';
+import { useAppDispatch, addOneApiItem } from '../app-redux';
 
 export const NewItemButton = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +10,7 @@ export const NewItemButton = () => {
     <Tooltip label="Add an api">
       <ActionIcon
         onClick={() => {
-          dispatch(newItem({ name: '', type: 'item' }));
+          dispatch(addOneApiItem({ name: '', type: 'item' }));
         }}
       >
         <IconFilePlus size={18} />

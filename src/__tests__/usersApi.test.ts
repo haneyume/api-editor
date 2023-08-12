@@ -1,4 +1,4 @@
-import { store, userApi } from '../redux';
+import { store, userApi } from '../app-redux';
 
 describe('usersApi', () => {
   it('get user 1', async () => {

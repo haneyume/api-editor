@@ -7,8 +7,8 @@ import { TextInput, Text, Button } from '@mantine/core';
 import {
   // useAppSelector,
   useAppDispatch,
-} from '../redux';
-import { newItem } from '../redux/features/apiItems/apiItemsSlice';
+  addOneApiItem,
+} from '../app-redux';
 
 export const PropertyFieldString = ({ z }: { z: ZodSchema }) => {
   // const currentItem = useAppSelector((state) => state.apiItem.currentItem);
@@ -18,7 +18,9 @@ export const PropertyFieldString = ({ z }: { z: ZodSchema }) => {
     <>
       <Text>{JSON.stringify(z)}</Text>
 
-      <Button onClick={() => dispatch(newItem({ name: '', type: 'item' }))}>
+      <Button
+        onClick={() => dispatch(addOneApiItem({ name: '', type: 'item' }))}
+      >
         newItem
       </Button>
 

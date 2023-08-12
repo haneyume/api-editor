@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 
-import { store } from '../redux';
 import {
-  newItem,
-  updateCurrentItem,
-  select,
-  updateAllItems,
-} from '../redux/features/apiItems/apiItemsSlice';
+  store,
+  addOneApiItem,
+  updateOneApiItem,
+  setAllApiItems,
+  selectApiItem,
+} from '../app-redux';
 
 describe('apiItem', () => {
   beforeAll(() => {
@@ -18,21 +18,21 @@ describe('apiItem', () => {
   it('new item', () => {
     const count = store.getState().apiItems.items.length;
 
-    store.dispatch(newItem({ name: 'test', type: 'item' }));
+    store.dispatch(addOneApiItem({ name: 'test', type: 'item' }));
 
     expect(store.getState().apiItems.items.length).toBe(count + 1);
   });
 
   it('update current item', () => {
-    store.dispatch(updateCurrentItem({ method: 'GET' }));
+    store.dispatch(updateOneApiItem({ method: 'GET' }));
   });
 
   it('select item', () => {
-    store.dispatch(select('test'));
+    store.dispatch(selectApiItem('test'));
   });
 
   it('update all items', () => {
-    store.dispatch(updateAllItems([]));
+    store.dispatch(setAllApiItems([]));
 
     expect(store.getState().apiItems.items.length).toBe(0);
   });

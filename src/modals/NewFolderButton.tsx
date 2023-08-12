@@ -1,8 +1,7 @@
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconFolderPlus } from '@tabler/icons-react';
 
-import { useAppDispatch } from '../redux';
-import { newItem } from '../redux/features/apiItems/apiItemsSlice';
+import { useAppDispatch, addOneApiItem } from '../app-redux';
 
 export const NewFolderButton = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +10,7 @@ export const NewFolderButton = () => {
     <Tooltip label="Add a folder">
       <ActionIcon
         onClick={() => {
-          dispatch(newItem({ name: '', type: 'folder' }));
+          dispatch(addOneApiItem({ name: '', type: 'folder' }));
         }}
       >
         <IconFolderPlus size={18} />

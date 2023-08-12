@@ -27,6 +27,7 @@ const usersSlice = createSlice({
     addOne: usersAdapter.addOne,
     updateOne: usersAdapter.updateOne,
     removeOne: usersAdapter.removeOne,
+    setAll: usersAdapter.setAll,
   },
   extraReducers(builder) {
     builder.addMatcher(
@@ -43,20 +44,27 @@ const usersSlice = createSlice({
   },
 });
 
-const userSelector = usersAdapter.getSelectors<RootState>(
-  (state) => state.users,
-);
+// --------------------------------------------------
 
 export const {
   addOne: addOneUser,
   updateOne: updateOneUser,
   removeOne: removeOneUser,
+  setAll: setAllUsers,
 } = usersSlice.actions;
+
+// --------------------------------------------------
+
+const userSelector = usersAdapter.getSelectors<RootState>(
+  (state) => state.users,
+);
 
 export const {
   selectAll: selectAllUsers,
   selectById: selectUserById,
   selectTotal: selectTotalUsers,
 } = userSelector;
+
+// --------------------------------------------------
 
 export default usersSlice.reducer;

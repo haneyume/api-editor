@@ -17,8 +17,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import type { ApiItem } from '../types';
 
-import { useAppSelector, useAppDispatch } from '../redux';
-import { updateCurrentItem } from '../redux/features/apiItems/apiItemsSlice';
+import { useAppSelector, useAppDispatch, updateOneApiItem } from '../app-redux';
 
 export const PropertyListItems = ({
   label,
@@ -52,7 +51,7 @@ export const PropertyListItems = ({
     const value = JSON.parse(JSON.stringify(form.values.items));
 
     dispatch(
-      updateCurrentItem({
+      updateOneApiItem({
         [field]: value,
       }),
     );

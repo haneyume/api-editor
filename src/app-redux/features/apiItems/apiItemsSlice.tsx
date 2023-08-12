@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../../app/store';
 
 import type { DNDTreeApiItem, ApiItem } from '../../../types';
 import {
@@ -20,10 +21,10 @@ const initialState: InitialState = {
 };
 
 export const apiItemsSlice = createSlice({
-  name: 'apiItem',
+  name: 'apiItems',
   initialState,
   reducers: {
-    newItem: (
+    addOne: (
       state,
       action: PayloadAction<{ name: string; type: 'item' | 'folder' }>,
     ) => {
@@ -35,7 +36,7 @@ export const apiItemsSlice = createSlice({
         state.items.push(createNewApiItem());
       }
     },
-    updateCurrentItem: (state, action: PayloadAction<Partial<ApiItem>>) => {
+    updateOne: (state, action: PayloadAction<Partial<ApiItem>>) => {
       const { items, selectedId } = state;
       const partialData = action.payload;
 
@@ -53,18 +54,37 @@ export const apiItemsSlice = createSlice({
 
       state.currentItem = state.items[index];
     },
+    setAll: (state, action: PayloadAction<DNDTreeApiItem[]>) => {
+      state.items = action.payload;
+    },
     select: (state, action: PayloadAction<string>) => {
       const id = action.payload;
 
       state.selectedId = id;
       state.currentItem = state.items.find((item) => item.id === id);
     },
-    updateAllItems: (state, action: PayloadAction<DNDTreeApiItem[]>) => {
-      state.items = action.payload;
-    },
   },
 });
 
+// --------------------------------------------------
+
+export const {
+  addOne: addOneApiItem,
+  updateOne: updateOneApiItem,
+  setAll: setAllApiItems,
+  select: selectApiItem,
+} = apiItemsSlice.actions;
+
+// --------------------------------------------------
+
+export const allApiItems = (state: RootState) => state.apiItems.items;
+
+export const selectedApiItem = createSelector(
+  (state: RootState) => state.apiItems.items,
+  (state: RootState) => state.apiItems.selectedId,
+  (items, selectedId) => items.find((item) => item.id === selectedId),
+);
+
+// --------------------------------------------------
+
 export default apiItemsSlice.reducer;
-export const { newItem, updateCurrentItem, select, updateAllItems } =
-  apiItemsSlice.actions;

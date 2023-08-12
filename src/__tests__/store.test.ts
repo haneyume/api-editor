@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { store } from '../redux';
+import { store } from '../app-redux';
 
 describe('store', () => {
   it('should be defined', () => {

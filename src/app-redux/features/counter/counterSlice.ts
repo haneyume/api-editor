@@ -25,17 +25,23 @@ export const counterSlice = createSlice({
   },
 });
 
+// --------------------------------------------------
+
 export const {
   increment: incrementCounter,
   decrement: decrementCounter,
   incrementByAmount: incrementCounterByAmount,
 } = counterSlice.actions;
 
-export const selectCount = (state: RootState) => state.counter.value;
+// --------------------------------------------------
 
 export const counterValue = createSelector(
   (state: RootState) => state.counter.value,
   (value) => value,
 );
+
+export const counterValue2 = (state: RootState) => state.counter.value;
+
+// --------------------------------------------------
 
 export default counterSlice.reducer;

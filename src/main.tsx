@@ -9,7 +9,7 @@ import './index.css';
 import 'allotment/dist/style.css';
 
 if (import.meta.env.DEV) {
-  import('./mocks/browser.ts').then(({ worker }) => {
+  import('./api-mocking/browser.ts').then(({ worker }) => {
     worker.start();
   });
 }

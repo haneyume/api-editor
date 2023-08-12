@@ -16,8 +16,7 @@ import {
 import axios from 'axios';
 import ReactJson from 'react-json-view';
 
-import { useAppSelector, useAppDispatch } from '../redux';
-import { updateCurrentItem } from '../redux/features/apiItems/apiItemsSlice';
+import { useAppSelector, useAppDispatch, updateOneApiItem } from '../app-redux';
 
 // import { Test } from './property/PropertyUIs';
 import { PropertyListItems } from '../property-uis/PropertyListItems';
@@ -86,7 +85,7 @@ const BasicTab = () => {
           data={['GET', 'POST', 'PUT', 'DELETE']}
           value={currentItem.data?.method}
           onChange={(value) => {
-            dispatch(updateCurrentItem({ method: value! }));
+            dispatch(updateOneApiItem({ method: value! }));
           }}
         />
 
@@ -96,7 +95,7 @@ const BasicTab = () => {
           label="Path"
           value={currentItem.data?.path}
           onChange={(e) => {
-            dispatch(updateCurrentItem({ path: e.target.value }));
+            dispatch(updateOneApiItem({ path: e.target.value }));
           }}
         />
       </Group>
@@ -107,7 +106,7 @@ const BasicTab = () => {
         label="Description"
         value={currentItem.data?.description}
         onChange={(e) => {
-          dispatch(updateCurrentItem({ description: e.target.value }));
+          dispatch(updateOneApiItem({ description: e.target.value }));
         }}
       />
 
@@ -124,7 +123,7 @@ const BasicTab = () => {
         autosize
         value={currentItem.data?.body}
         onChange={(e) => {
-          dispatch(updateCurrentItem({ body: e.target.value }));
+          dispatch(updateOneApiItem({ body: e.target.value }));
         }}
       />
     </Stack>
@@ -156,7 +155,7 @@ const RequestTab = () => {
 
     setLoading(false);
 
-    dispatch(updateCurrentItem({ response: response.data }));
+    dispatch(updateOneApiItem({ response: response.data }));
   };
 
   return (

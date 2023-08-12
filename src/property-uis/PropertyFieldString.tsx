@@ -1,9 +1,9 @@
 import { Text, TextInput } from '@mantine/core';
 
-import { useAppSelector } from '../redux';
+import { useAppSelector } from '../app-redux';
 
-import { store } from '../redux';
-import type { RootState } from '../redux';
+import { store } from '../app-redux';
+import type { RootState } from '../app-redux';
 
 import { ApiItem } from '../types';
 

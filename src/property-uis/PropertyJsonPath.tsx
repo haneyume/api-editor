@@ -17,8 +17,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import jsonpath from 'jsonpath';
 
-import { useAppSelector, useAppDispatch } from '../redux';
-import { updateCurrentItem } from '../redux/features/apiItems/apiItemsSlice';
+import { useAppSelector, useAppDispatch, updateOneApiItem } from '../app-redux';
 
 export const PropertyJsonPath = () => {
   const field = 'jsonPathList';
@@ -49,7 +48,7 @@ export const PropertyJsonPath = () => {
     const value = JSON.parse(JSON.stringify(form.values.items));
 
     dispatch(
-      updateCurrentItem({
+      updateOneApiItem({
         [field]: value,
       }),
     );

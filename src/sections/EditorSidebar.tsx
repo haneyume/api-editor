@@ -16,11 +16,12 @@ import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 
 import clsx from 'clsx';
 
-import { useAppSelector, useAppDispatch } from '../redux';
 import {
-  select,
-  updateAllItems,
-} from '../redux/features/apiItems/apiItemsSlice';
+  useAppSelector,
+  useAppDispatch,
+  setAllApiItems,
+  selectApiItem,
+} from '../app-redux';
 
 import { NewFolderButton, NewItemButton } from '../modals';
 
@@ -35,10 +36,6 @@ export const EditorSidebar = () => {
   useEffect(() => {
     treeRef.current?.openAll();
   }, [treeRef]);
-
-  const handleDrop = (newTreeData: any) => {
-    dispatch(updateAllItems(newTreeData));
-  };
 
   const renderIcon = (method: string) => {
     switch (method) {
@@ -64,7 +61,9 @@ export const EditorSidebar = () => {
           ref={treeRef}
           tree={items}
           rootId={'root'}
-          onDrop={handleDrop}
+          onDrop={(newTreeData: any) => {
+            dispatch(setAllApiItems(newTreeData));
+          }}
           sort={false}
           insertDroppableFirst={false}
           canDrop={(_, { dragSource, dropTargetId }) => {
@@ -95,7 +94,7 @@ export const EditorSidebar = () => {
                   }
 
                   if (!node.droppable) {
-                    dispatch(select(node.id as string));
+                    dispatch(selectApiItem(node.id as string));
                   }
                 }}
               >
