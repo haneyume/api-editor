@@ -9,9 +9,5 @@ export const store = configureStore({
     counter: undoable(counterReducer),
     apiItem: apiItemReducer,
   },
+  devTools: import.meta.env.DEV,
 });
-
-// store.dispatch({
-//   type: 'apiItem/newItem',
-//   payload: { name: '', type: 'item' },
-// });
