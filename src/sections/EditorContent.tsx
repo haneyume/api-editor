@@ -17,14 +17,14 @@ import axios from 'axios';
 import ReactJson from 'react-json-view';
 
 import { useAppSelector, useAppDispatch } from '../redux';
-import { updateCurrentItem } from '../redux/apiItemSlice';
+import { updateCurrentItem } from '../redux/features/apiItems/apiItemsSlice';
 
 // import { Test } from './property/PropertyUIs';
 import { PropertyListItems } from '../property-uis/PropertyListItems';
 import { PropertyJsonPath } from '../property-uis/PropertyJsonPath';
 
 export const EditorContent = () => {
-  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
 
   if (!currentItem) {
     return null;
@@ -70,7 +70,7 @@ export const EditorContent = () => {
 };
 
 const BasicTab = () => {
-  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
 
   if (!currentItem) {
@@ -134,7 +134,7 @@ const BasicTab = () => {
 const RequestTab = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
 
   if (!currentItem) {

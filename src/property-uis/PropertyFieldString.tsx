@@ -8,10 +8,10 @@ import type { RootState } from '../redux';
 import { ApiItem } from '../types';
 
 type ItemField = {
-  apiItem: ApiItem;
+  apiItems: ApiItem;
 };
 
-interface Props<T extends keyof Pick<RootState, 'apiItem'>> {
+interface Props<T extends keyof Pick<RootState, 'apiItems'>> {
   category: T;
   field: keyof ItemField[T];
   action?: string;
@@ -19,7 +19,7 @@ interface Props<T extends keyof Pick<RootState, 'apiItem'>> {
 }
 
 export function PropertyFieldString<
-  T extends keyof Pick<RootState, 'apiItem'>,
+  T extends keyof Pick<RootState, 'apiItems'>,
 >({
   category,
   field,

@@ -2,7 +2,7 @@ import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconFilePlus } from '@tabler/icons-react';
 
 import { useAppDispatch } from '../redux';
-import { newItem } from '../redux/apiItemSlice';
+import { newItem } from '../redux/features/apiItems/apiItemsSlice';
 
 export const NewItemButton = () => {
   const dispatch = useAppDispatch();

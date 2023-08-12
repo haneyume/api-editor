@@ -1,14 +1,12 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+export { store } from './app/store';
+export type { RootState, AppDispatch } from './app/store';
 
-import { store } from './store';
+export * from './features/counter/counterSlice';
+export * from './features/apiItems/apiItemsSlice';
+export * from './features/users/usersSlice';
 
-type RootState = ReturnType<typeof store.getState>;
-type AppDispatch = typeof store.dispatch;
+export * from './apis/userApi';
+
+export { useAppSelector, useAppDispatch } from './hooks/hooks';
 
 export { Provider as ReduxProvider } from 'react-redux';
-export { store };
-
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-export type { RootState };

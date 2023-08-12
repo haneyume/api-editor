@@ -18,7 +18,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import type { ApiItem } from '../types';
 
 import { useAppSelector, useAppDispatch } from '../redux';
-import { updateCurrentItem } from '../redux/apiItemSlice';
+import { updateCurrentItem } from '../redux/features/apiItems/apiItemsSlice';
 
 export const PropertyListItems = ({
   label,
@@ -27,7 +27,7 @@ export const PropertyListItems = ({
   label: string;
   field: keyof ApiItem;
 }) => {
-  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
 
   if (!currentItem) {

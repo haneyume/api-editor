@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import type { DNDTreeApiItem, ApiItem } from '../types';
+import type { DNDTreeApiItem, ApiItem } from '../../../types';
 import {
   defaultApiItems,
   createNewApiItemFolder,
   createNewApiItem,
-} from '../types';
+} from '../../../types';
 
 interface InitialState {
   items: DNDTreeApiItem[];
@@ -19,7 +19,7 @@ const initialState: InitialState = {
   currentItem: undefined,
 };
 
-export const apiItemSlice = createSlice({
+export const apiItemsSlice = createSlice({
   name: 'apiItem',
   initialState,
   reducers: {
@@ -65,6 +65,6 @@ export const apiItemSlice = createSlice({
   },
 });
 
-export default apiItemSlice.reducer;
+export default apiItemsSlice.reducer;
 export const { newItem, updateCurrentItem, select, updateAllItems } =
-  apiItemSlice.actions;
+  apiItemsSlice.actions;

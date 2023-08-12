@@ -17,13 +17,16 @@ import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 import clsx from 'clsx';
 
 import { useAppSelector, useAppDispatch } from '../redux';
-import { select, updateAllItems } from '../redux/apiItemSlice';
+import {
+  select,
+  updateAllItems,
+} from '../redux/features/apiItems/apiItemsSlice';
 
 import { NewFolderButton, NewItemButton } from '../modals';
 
 export const EditorSidebar = () => {
-  const items = useAppSelector((state) => state.apiItem.items);
-  const selectedId = useAppSelector((state) => state.apiItem.selectedId);
+  const items = useAppSelector((state) => state.apiItems.items);
+  const selectedId = useAppSelector((state) => state.apiItems.selectedId);
   // const currentItem = useAppSelector((state) => state.apiItem.currentItem);
   const dispatch = useAppDispatch();
 

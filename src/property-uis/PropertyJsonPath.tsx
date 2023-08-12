@@ -18,13 +18,13 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import jsonpath from 'jsonpath';
 
 import { useAppSelector, useAppDispatch } from '../redux';
-import { updateCurrentItem } from '../redux/apiItemSlice';
+import { updateCurrentItem } from '../redux/features/apiItems/apiItemsSlice';
 
 export const PropertyJsonPath = () => {
   const field = 'jsonPathList';
   const label = 'JSON Path';
 
-  const currentItem = useAppSelector((state) => state.apiItem.currentItem);
+  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
 
   if (!currentItem) {

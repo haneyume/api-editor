@@ -6,21 +6,21 @@ import {
   updateCurrentItem,
   select,
   updateAllItems,
-} from '../redux/apiItemSlice';
+} from '../redux/features/apiItems/apiItemsSlice';
 
 describe('apiItem', () => {
   beforeAll(() => {
     store.subscribe(() => {
-      console.log(store.getState().apiItem);
+      console.log(store.getState().apiItems);
     });
   });
 
   it('new item', () => {
-    const count = store.getState().apiItem.items.length;
+    const count = store.getState().apiItems.items.length;
 
     store.dispatch(newItem({ name: 'test', type: 'item' }));
 
-    expect(store.getState().apiItem.items.length).toBe(count + 1);
+    expect(store.getState().apiItems.items.length).toBe(count + 1);
   });
 
   it('update current item', () => {
@@ -34,6 +34,6 @@ describe('apiItem', () => {
   it('update all items', () => {
     store.dispatch(updateAllItems([]));
 
-    expect(store.getState().apiItem.items.length).toBe(0);
+    expect(store.getState().apiItems.items.length).toBe(0);
   });
 });

@@ -8,7 +8,7 @@ import {
   // useAppSelector,
   useAppDispatch,
 } from '../redux';
-import { newItem } from '../redux/apiItemSlice';
+import { newItem } from '../redux/features/apiItems/apiItemsSlice';
 
 export const PropertyFieldString = ({ z }: { z: ZodSchema }) => {
   // const currentItem = useAppSelector((state) => state.apiItem.currentItem);
