@@ -33,6 +33,7 @@ export const AppNavbar = () => {
             return (
               <Tooltip key={index} label={t(link.label)} position="bottom">
                 <NavLink
+                  data-cy={`AppNavbar-${link.label}`}
                   icon={<Icon size={18} />}
                   label={t(link.label)}
                   onClick={() => navigate(link.path)}

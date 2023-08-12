@@ -77,12 +77,14 @@ export const PropertyJsonPath = () => {
             <IconGripVertical size="1.2rem" />
           </Center>
           <TextInput
+            data-cy={`PropertyJsonPath-${index}-name`}
             className="flex-1"
             variant="filled"
             placeholder="name"
             {...form.getInputProps(`items.${index}.name`)}
           />
           <TextInput
+            data-cy={`PropertyJsonPath-${index}-value`}
             className="flex-1"
             variant="filled"
             placeholder="value"
@@ -130,6 +132,7 @@ export const PropertyJsonPath = () => {
 
         <Group mt="md">
           <Button
+            data-cy={`PropertyJsonPath-add`}
             fullWidth
             variant="light"
             onClick={() => form.insertListItem('items', { key: '', value: '' })}

@@ -75,31 +75,36 @@ export const EditorSidebar = () => {
               <div className="flex-1 h-[2px] bg-[#007fd4]" />
             </div>
           )}
-          render={(node, { depth, isOpen, onToggle }) => (
-            <div
-              className={clsx(
-                'flex items-center space-x-2 cursor-pointer hover:bg-gray-800',
-                selectedId === node.id && 'bg-gray-700',
-              )}
-              style={{ paddingLeft: 10 + depth * 20 }}
-              onClick={() => {
-                if (node.droppable) {
-                  onToggle();
-                }
+          render={(node, { depth, isOpen, onToggle }) => {
+            const index = items.findIndex((item) => item.id === node.id);
 
-                if (!node.droppable) {
-                  dispatch(select(node.id as string));
-                }
-              }}
-            >
-              {node.droppable && isOpen && <IconCaretDown size={14} />}
-              {node.droppable && !isOpen && <IconCaretRight size={14} />}
+            return (
+              <div
+                data-cy={`EditorSidebar-item-${index}`}
+                className={clsx(
+                  'flex items-center space-x-2 cursor-pointer hover:bg-gray-800',
+                  selectedId === node.id && 'bg-gray-700',
+                )}
+                style={{ paddingLeft: 10 + depth * 20 }}
+                onClick={() => {
+                  if (node.droppable) {
+                    onToggle();
+                  }
 
-              {renderIcon(node.data?.method || '')}
+                  if (!node.droppable) {
+                    dispatch(select(node.id as string));
+                  }
+                }}
+              >
+                {node.droppable && isOpen && <IconCaretDown size={14} />}
+                {node.droppable && !isOpen && <IconCaretRight size={14} />}
 
-              <div>{node.text}</div>
-            </div>
-          )}
+                {renderIcon(node.data?.method || '')}
+
+                <div>{node.text}</div>
+              </div>
+            );
+          }}
         />
       </DndProvider>
     </Stack>

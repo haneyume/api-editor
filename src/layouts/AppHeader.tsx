@@ -14,11 +14,17 @@ export const AppHeader = () => {
   return (
     <Header height={{ base: 70 }}>
       <div className="px-5 h-full flex items-center space-x-5">
-        <UnstyledButton onClick={() => navigate('/')}>
+        <UnstyledButton
+          data-cy={`AppHeader-brand`}
+          onClick={() => navigate('/')}
+        >
           <IconBrandReact />
         </UnstyledButton>
 
-        <UnstyledButton onClick={() => navigate('/')}>
+        <UnstyledButton
+          data-cy={`AppHeader-title`}
+          onClick={() => navigate('/')}
+        >
           <Title order={3}>API Editor</Title>
         </UnstyledButton>
 

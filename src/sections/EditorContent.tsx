@@ -40,9 +40,15 @@ export const EditorContent = () => {
 
           <Tabs defaultValue="0">
             <Tabs.List>
-              <Tabs.Tab value="0">Api Settings</Tabs.Tab>
-              <Tabs.Tab value="1">Request</Tabs.Tab>
-              <Tabs.Tab value="2">JSON Path</Tabs.Tab>
+              <Tabs.Tab data-cy={`EditorContent-0`} value="0">
+                Api Settings
+              </Tabs.Tab>
+              <Tabs.Tab data-cy={`EditorContent-1`} value="1">
+                Request
+              </Tabs.Tab>
+              <Tabs.Tab data-cy={`EditorContent-2`} value="2">
+                JSON Path
+              </Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="0" pt="xs">
@@ -155,7 +161,11 @@ const RequestTab = () => {
 
   return (
     <Stack>
-      <Button onClick={sendRequest} loading={loading}>
+      <Button
+        data-cy={`RequestTab-sendRequest`}
+        onClick={sendRequest}
+        loading={loading}
+      >
         Send Request
       </Button>
 

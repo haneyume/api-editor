@@ -5,16 +5,22 @@ import { useAppSelector } from '../redux';
 import { store } from '../redux';
 import type { RootState } from '../redux';
 
-import { DNDTreeItem } from '../types';
+import { ApiItem } from '../types';
 
-interface Props<T> {
-  category: keyof Pick<RootState, 'apiItem'>;
-  field: keyof T;
+type ItemField = {
+  apiItem: ApiItem;
+};
+
+interface Props<T extends keyof Pick<RootState, 'apiItem'>> {
+  category: T;
+  field: keyof ItemField[T];
   action?: string;
   targetObject?: string;
 }
 
-export function PropertyFieldString<T>({
+export function PropertyFieldString<
+  T extends keyof Pick<RootState, 'apiItem'>,
+>({
   category,
   field,
   action = 'updateCurrentItem',
@@ -26,7 +32,7 @@ export function PropertyFieldString<T>({
     return <Text>Error: currentItem === undefined</Text>;
   }
 
-  const currentItemData = (currentItem as DNDTreeItem<T>)?.data;
+  const currentItemData = currentItem?.data;
   if (!currentItemData) {
     return <Text>Error: currentItemData === undefined</Text>;
   }
@@ -46,3 +52,14 @@ export function PropertyFieldString<T>({
     />
   );
 }
+
+// const Test = () => {
+//   return (
+//     <PropertyFieldString
+//       category="apiItem"
+//       field="method"
+//       action="updateCurrentItem"
+//       targetObject="currentItem"
+//     />
+//   );
+// };
