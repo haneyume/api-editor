@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { store, userApi } from '../app-redux';
 
 describe('usersApi', () => {

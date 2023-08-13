@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  createEntityAdapter,
-  createAsyncThunk,
-} from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 import { userApi } from '../../apis/userApi';
@@ -13,12 +9,6 @@ type User = {
 };
 
 const usersAdapter = createEntityAdapter<User>();
-
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  // const response = await client.get('/fakeApi/users');
-  // return response.data;
-  return [];
-});
 
 const usersSlice = createSlice({
   name: 'users',

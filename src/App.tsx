@@ -15,15 +15,13 @@ import { AppRoutes } from './AppRoutes';
 export const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
 
-  const toggleColorScheme = (value?: ColorScheme) => {
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-  };
-
   return (
     <ReduxProvider store={store}>
       <ColorSchemeProvider
         colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
+        toggleColorScheme={(value) => {
+          setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+        }}
       >
         <MantineProvider
           theme={{ colorScheme }}

@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "cypress:open": "cypress open"
+    "test:e2e": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

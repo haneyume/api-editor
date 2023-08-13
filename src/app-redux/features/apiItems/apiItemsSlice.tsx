@@ -1,12 +1,12 @@
 import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
-import type { DNDTreeApiItem, ApiItem } from '../../../types';
+import type { DNDTreeApiItem, ApiItem } from '../../types';
 import {
   defaultApiItems,
   createNewApiItemFolder,
   createNewApiItem,
-} from '../../../types';
+} from '../../types';
 
 interface InitialState {
   items: DNDTreeApiItem[];
